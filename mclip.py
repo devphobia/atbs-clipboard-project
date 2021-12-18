@@ -17,26 +17,21 @@ def add_work_intro(text, client_name):
     intro = f"Good evening, {client_name}!\n"
     outro = f"\nMany thanks,\ndevphobia"
 
-    new_text = intro + text + outro
+    new_text = "\n".join([intro, text, outro])
 
     return new_text
 
 
-while True:
-    if len(sys.argv) < 4:
-        sys.argv.append(None)
-    else:
-        break
+max_arguments_size = 4
 
-if len(sys.argv) == 4:
-    keyphrase, client_name, intro = sys.argv[1::]
-else:
-    invalid_usage()
+while len(sys.argv) < max_arguments_size:
+    sys.argv.append(None)
 
-if keyphrase == None:
-    invalid_usage()
-elif keyphrase not in ANSWERS:
+keyphrase, client_name, intro = sys.argv[1:max_arguments_size]
+
+if keyphrase not in ANSWERS:
     print("Keyphrase not found!")
+    invalid_usage()
 else:
     answer = ANSWERS[keyphrase]
 
@@ -46,4 +41,3 @@ if intro != None:
 pyperclip.copy(answer)
 
 print(f"{keyphrase} answer copied to the clipboard!")
-
